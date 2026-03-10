@@ -21,9 +21,9 @@ node {
         sshagent(['ssh-prod']) {
             sh '''
             mkdir -p ~/.ssh
-            ssh-keyscan -H 192.168.1.20 >> ~/.ssh/known_hosts
+            ssh-keyscan -H 192.168.1.14 >> ~/.ssh/known_hosts
 
-            rsync -avz --delete ./ ubuntu@192.168.1.20:/var/www/laravel
+            rsync -avz --delete ./ ubuntu@192.168.1.14:/var/www/laravel
             '''
         }
     }
