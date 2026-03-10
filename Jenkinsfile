@@ -3,10 +3,10 @@ node {
 
   // Build Stage
   stage("Build") {
-      docker.image('composer:2-php8.2').inside('-u root') {
-        sh 'composer install'
-      }
-    }
+  docker.image('composer:2.7').inside('-u root') {
+    sh 'composer install'
+  }
+}
 
   // Testing Stage
   stage("Testing") {
