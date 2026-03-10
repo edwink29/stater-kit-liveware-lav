@@ -23,7 +23,7 @@ node {
             mkdir -p ~/.ssh
             ssh-keyscan -H 192.168.1.14 >> ~/.ssh/known_hosts
 
-            rsync -avz --delete ./ ubuntu@192.168.1.14:/var/www/laravel
+            rsync -avz --delete ./ edwin@192.168.1.14:/var/www/laravel
             '''
         }
     }
