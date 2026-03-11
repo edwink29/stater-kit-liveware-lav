@@ -46,15 +46,9 @@ node {
   }
 
   stage('Deploy') {
-    docker.image('agung3wi/alpine-rsync:1.1').inside {
-      sshagent(['ssh-prod']) {
         sh '''
-        mkdir -p ~/.ssh
-        ssh-keyscan -H $PROD_HOST >> ~/.ssh/known_hosts
-
-        rsync -avz --delete ./ edwin@$PROD_HOST:/var/www/laravel
+        mkdir -p /var/www/laravel
+        rsync -avz --delete ./ /var/www/laravel
         '''
-      }
     }
-  }
 }
