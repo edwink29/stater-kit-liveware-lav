@@ -1,6 +1,6 @@
 node {
   checkout scm
-
+  env.PROD_HOST="10.10.5.108"
   // Build Stage
   stage("Build") {
   docker.image('composer:2.7').inside('-u root') {
