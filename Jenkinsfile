@@ -17,15 +17,14 @@ node {
 
   // Deploy to production stage
   stage('Deploy') {
-  docker.image('agung3wi/alpine-rsync:1.1').inside {
-    sshagent(['ssh-prod']) {
-      sh '''
-      mkdir -p ~/.ssh
-      ssh-keyscan -H 10.10.5.108 >> ~/.ssh/known_hosts
-
-      rsync -avz --delete ./ edwin@10.10.5.108:/var/www/laravel
-      '''
-    }
+  docker.image('agung3wi/alpine-rsync:1.1').inside('-u root') {
+sshagent (credentials: ['ssh-prod']) {
+sh 'mkdir -p ~/.ssh'
+sh 'ssh-keyscan -H "$PROD_HOST" > ~/.ssh/known_hosts'
+sh "rsync -rav --delete ./laravel/
+ubuntu@$PROD_HOST:/home/ubuntu/prod.kelasdevops.xyz/ --exclude=.env -
+-exclude=storage --exclude=.git"
+}
   }
 }
 }
