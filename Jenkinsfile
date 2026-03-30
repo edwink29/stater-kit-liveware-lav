@@ -24,14 +24,14 @@ node {
             mkdir -p ~/.ssh
             chmod 700 ~/.ssh
             
-            ssh-keyscan -H 172.20.10.4 >> ~/.ssh/known_hosts
+            ssh-keyscan -H 10.10.177.57 >> ~/.ssh/known_hosts
 
-            ssh -o BatchMode=yes -o StrictHostKeyChecking=no edwin@172.20.10.4 "echo CONNECTED"
+            ssh -o BatchMode=yes -o StrictHostKeyChecking=no edwin@10.10.177.57 "echo CONNECTED"
 
             # Rsync dengan opsi SSH khusus
             rsync -avz --delete \
             -e "ssh -o StrictHostKeyChecking=no" \
-            ./ edwin@172.20.10.4:/home/edwin/laravel-app\
+            ./ edwin@10.10.177.57:/home/edwin/laravel-app\
             --exclude=.git \
             --exclude=node_modules
             '''
