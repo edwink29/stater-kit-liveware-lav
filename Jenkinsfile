@@ -23,6 +23,8 @@ node {
 
         rsync -rav --delete ./ \
         edwin@$PROD_HOST:/home/edwin/prod.kelasdevops.xyz/ \
+        --exclude=.env \
+        --exclude=storage \
         --exclude=.git
 
         ssh edwin@$PROD_HOST "
