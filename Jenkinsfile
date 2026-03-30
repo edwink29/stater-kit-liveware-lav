@@ -2,11 +2,14 @@ node {
     checkout scm
 
     stage("Build") {
-        docker.image('senasindhabramasta/php-8.4:latest').inside('-u root') {
-            sh 'git config --global --add safe.directory /var/jenkins_home/workspace/flottiecook-devops'
-            sh 'composer install --no-interaction --prefer-dist'
-        }
-    }
+
+      docker.image('composer:2.7').inside('-u root') {
+
+      sh 'composer install'
+
+      }
+
+      }
 
     stage("Test") {
         docker.image('ubuntu').inside('-u root') {
