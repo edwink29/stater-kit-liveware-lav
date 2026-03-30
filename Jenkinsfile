@@ -27,8 +27,14 @@ node {
         --exclude=storage \
         --exclude=.git
 
-        # ← TAMBAH INI: clear cache setelah deploy
-        ssh edwin@$PROD_HOST "cd /home/edwin/prod.kelasdevops.xyz && php artisan optimize:clear && php artisan config:cache"
+        # Post-deploy: clear cache & setup ulang
+        ssh edwin@$PROD_HOST "
+          cd /home/edwin/prod.kelasdevops.xyz &&
+          php artisan optimize:clear &&
+          php artisan config:cache &&
+          php artisan route:cache &&
+          php artisan view:cache
+        "
         '''
       }
     }
