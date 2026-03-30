@@ -22,8 +22,9 @@ node {
         mkdir -p ~/.ssh
         ssh-keyscan -H $PROD_HOST >> ~/.ssh/known_hosts
 
+        # SUDAH DIGANTI KE EDWIN
         rsync -rav --delete ./ \
-        ubuntu@$PROD_HOST:/home/ubuntu/prod.kelasdevops.xyz/ \
+        edwin@$PROD_HOST:/home/edwin/prod.kelasdevops.xyz/ \
         --exclude=.env \
         --exclude=storage \
         --exclude=.git
