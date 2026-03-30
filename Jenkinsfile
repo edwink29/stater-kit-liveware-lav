@@ -17,25 +17,25 @@ node {
         }
     }
 
-//     stage("Deploy") {
-//     docker.image('agung3wi/alpine-rsync:1.1').inside('-u root') {
-//         sshagent (credentials: ['ssh-prod']) {
-//             sh '''
-//             mkdir -p ~/.ssh
-//             chmod 700 ~/.ssh
+    stage("Deploy") {
+    docker.image('agung3wi/alpine-rsync:1.1').inside('-u root') {
+        sshagent (credentials: ['ssh-prod']) {
+            sh '''
+            mkdir -p ~/.ssh
+            chmod 700 ~/.ssh
             
-//             ssh-keyscan -H 10.10.184.182 >> ~/.ssh/known_hosts
+            ssh-keyscan -H 10.10.182.123 >> ~/.ssh/known_hosts
 
-//             ssh -o BatchMode=yes -o StrictHostKeyChecking=no sakab@10.10.184.182 "echo CONNECTED"
+            ssh -o BatchMode=yes -o StrictHostKeyChecking=no edwin@10.10.182.123 "echo CONNECTED"
 
-//             # Rsync dengan opsi SSH khusus
-//             rsync -avz --delete \
-//             -e "ssh -o StrictHostKeyChecking=no" \
-//             ./ sakab@10.10.184.182:/home/sakab/flottie-app \
-//             --exclude=.git \
-//             --exclude=node_modules
-//             '''
-//         }
-//     }
-// }
+            # Rsync dengan opsi SSH khusus
+            rsync -avz --delete \
+            -e "ssh -o StrictHostKeyChecking=no" \
+            ./ edwin@10.10.182.123:/home/edwin/laravel-app\
+            --exclude=.git \
+            --exclude=node_modules
+            '''
+        }
+    }
+}
 }
