@@ -22,9 +22,6 @@
     </head>
     <body>
         <p>edwin</p>
-        <h2>mantappu jiwa bos</h2>
-        <h5>jasuka</h5>
-        <p>hello</p>
-        <h2>mas aldo</h2>
+        <h1>Hello</h1>
     </body>
 </html>
