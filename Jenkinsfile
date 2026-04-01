@@ -25,19 +25,22 @@ node {
             chmod 700 ~/.ssh
             ssh-keyscan -H 192.168.1.14 >> ~/.ssh/known_hosts
 
-            # Rsync dengan tambahan exclude .env
-            rsync -avz --delete \
+            # Perubahan 1: Gunakan -rlptD (menghindari error set times/perms pada folder sistem)
+            # Perubahan 2: Tambahkan --exclude untuk folder yang isinya dinamis di server
+            rsync -rlptD --delete \
             -e "ssh -o StrictHostKeyChecking=no" \
             --exclude=.git \
             --exclude=node_modules \
             --exclude=.env \
+            --exclude=storage/framework/views/* \
+            --exclude=storage/logs/* \
             ./ edwin@192.168.1.14:/home/edwin/laravel-app
 
-            # Jalankan perintah SSH untuk memperbaiki permission di server tujuan
+            # Perubahan 3: Paksa perbaikan permission setelah rsync selesai
             ssh edwin@192.168.1.14 "
                 cd /home/edwin/laravel-app && \
                 chmod -R 775 storage bootstrap/cache && \
-                if [ ! -f .env ]; then echo '.env MISSING!'; fi
+                php artisan cache:clear || echo 'Artisan not found'
             "
             '''
         }
