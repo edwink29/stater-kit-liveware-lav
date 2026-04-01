@@ -23,17 +23,22 @@ node {
             sh '''
             mkdir -p ~/.ssh
             chmod 700 ~/.ssh
-            
-            ssh-keyscan -H 10.10.177.57 >> ~/.ssh/known_hosts
+            ssh-keyscan -H 192.168.1.14 >> ~/.ssh/known_hosts
 
-            ssh -o BatchMode=yes -o StrictHostKeyChecking=no edwin@10.10.177.57 "echo CONNECTED"
-
-            # Rsync dengan opsi SSH khusus
+            # Rsync dengan tambahan exclude .env
             rsync -avz --delete \
             -e "ssh -o StrictHostKeyChecking=no" \
-            ./ edwin@10.10.177.57:/home/edwin/laravel-app\
             --exclude=.git \
-            --exclude=node_modules
+            --exclude=node_modules \
+            --exclude=.env \
+            ./ edwin@192.168.1.14:/home/edwin/laravel-app
+
+            # Jalankan perintah SSH untuk memperbaiki permission di server tujuan
+            ssh edwin@192.168.1.14 "
+                cd /home/edwin/laravel-app && \
+                chmod -R 775 storage bootstrap/cache && \
+                if [ ! -f .env ]; then echo '.env MISSING!'; fi
+            "
             '''
         }
     }
